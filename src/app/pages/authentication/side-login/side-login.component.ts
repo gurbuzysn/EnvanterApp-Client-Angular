@@ -24,6 +24,14 @@ export class AppSideLoginComponent {
   }
 
   submit() {
-    this.router.navigate(['']);
+    if (this.form.valid) {
+      const { uname, password } = this.form.value;
+      console.log('Username:', uname);
+      console.log('Password:', password);
+      alert('Submit çalıştı');
+      this.router.navigate(['']);
+    } else {
+      alert('Form hatalı, lütfen kontrol edin.');
+    }
   }
 }
