@@ -20,8 +20,8 @@ export class AppSideLoginComponent {
   private authService = inject(AuthService);
 
   form = new FormGroup({
-    uname: new FormControl('', [Validators.required, Validators.minLength(6)]),
-    password: new FormControl('', [Validators.required]),
+    UserName: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    Password: new FormControl('', [Validators.required]),
   });
 
   get f() {
@@ -32,8 +32,8 @@ export class AppSideLoginComponent {
     alert('side-login-component.ts çalıştı. ===> authService e gidecek');
     if (this.form.valid) {
       const credentials = this.form.value as {
-        uname: string;
-        password: string;
+        UserName: string;
+        Password: string;
       };
 
       this.authService.login(credentials).subscribe({
