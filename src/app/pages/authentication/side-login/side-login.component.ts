@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { error } from 'console';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-side-login',
@@ -29,7 +30,6 @@ export class AppSideLoginComponent {
   }
 
   submit() {
-    alert('side-login-component.ts çalıştı. ===> authService e gidecek');
     if (this.form.valid) {
       const credentials = this.form.value as {
         UserName: string;
@@ -44,11 +44,22 @@ export class AppSideLoginComponent {
         },
         error: (error) => {
           console.error('Login failed', error);
-          alert('Giriş başarısız! Kullanıcı adı veya şifre yanlış olabilir.');
+          Swal.fire({
+            title: 'Hata',
+            text: 'Kullanıcı adı veya şifre hatalı',
+            icon: 'error',
+            confirmButtonText: 'Tekrar Dene!'
+
+          })
         },
       });
     } else {
-      alert('Form hatalıi lütfen kontrol edin');
+      Swal.fire({
+         title: 'Hata',
+         text: 'Form hatalı lütfen kontrol edin',
+         icon: 'error',
+         confirmButtonText: 'Tekrar Dene!'
+      })
     }
   }
 }
