@@ -1,8 +1,22 @@
 import { Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export const routes: Routes = [
+
+
+
+
+  
+  {
+    path:'app-dashboard',
+    component: DashboardComponent
+  },
+
+
+
+
   {
     path: '',
     component: FullComponent,

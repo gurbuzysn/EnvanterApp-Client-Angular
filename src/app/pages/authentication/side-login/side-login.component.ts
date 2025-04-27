@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from 'src/app/services/auth.service';
 import { error } from 'console';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-side-login',
@@ -21,7 +21,10 @@ export class AppSideLoginComponent {
   private authService = inject(AuthService);
 
   form = new FormGroup({
-    UserName: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    UserName: new FormControl('', [
+      Validators.required,
+      Validators.minLength(3),
+    ]),
     Password: new FormControl('', [Validators.required]),
   });
 
@@ -37,29 +40,38 @@ export class AppSideLoginComponent {
       };
 
       this.authService.login(credentials).subscribe({
-        next: (response) => {
-          console.log('Login successful', response);
+        next: (response: any) => {
 
-          // this.router.navigate('');
+          if (response.result.token.accessToken !== null) {
+            this.router.navigate(['app-dashboard']);
+
+            Swal.fire({
+              title: 'Giriş Başarılı',
+              icon: 'success',
+              confirmButtonColor: 'green'
+            })
+
+          }
+          
         },
         error: (error) => {
-          console.error('Login failed', error);
-          Swal.fire({
-            title: 'Hata',
-            text: 'Kullanıcı adı veya şifre hatalı',
-            icon: 'error',
-            confirmButtonText: 'Tekrar Dene!'
 
+          console.log(error);
+
+          Swal.fire({
+            title: error.error.message,
+            icon: 'warning'
           })
         },
       });
     } else {
       Swal.fire({
-         title: 'Hata',
-         text: 'Form hatalı lütfen kontrol edin',
-         icon: 'error',
-         confirmButtonText: 'Tekrar Dene!'
-      })
+        title: 'Hata',
+        text: 'Form hatalı lütfen kontrol edin',
+        icon: 'error',
+        confirmButtonText: 'Tekrar Dene!',
+        iconColor: 'red',
+      });
     }
   }
 }
